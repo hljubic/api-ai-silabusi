@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: letsencrypt-prod-api-ai-dnevnik
+  namespace: default # Promijenite namespace ako je drugačiji
+spec:
+  secretName: letsencrypt-prod-api-ai-dnevnik
+  issuerRef:
+    name: letsencrypt-prod
+    kind: ClusterIssuer
+  commonName: api-ai.dnevnik.sum.ba
+  dnsNames:
+    - api-ai.dnevnik.sum.ba

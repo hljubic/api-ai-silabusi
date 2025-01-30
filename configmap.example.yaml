@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: ai-pomocnik-ednevnik-api-config
+data:
+  OPENAI_API_KEY: ""
+  OPENAI_ASSISTANT_ID: ""

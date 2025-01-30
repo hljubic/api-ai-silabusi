@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: ai-pomocnik-ednevnik-api-pv
+  labels:
+    app: ai-pomocnik-ednevnik-api
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /home/hljubic/projects/api-ai.dnevnik.sum.ba/data
+  storageClassName: manual
+  claimRef:
+    namespace: default
+    name: ai-pomocnik-ednevnik-api-pvc
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ai-pomocnik-ednevnik-api-pvc
+  labels:
+    app: ai-pomocnik-ednevnik-api
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: manual

@@ -1,0 +1,14 @@
+# .gitignore
+
+# Python virtual environment
+.venv/
+
+# Environment variables file
+.env
+configmap.yaml
+
+db/threads_db.dat
+responses.csv
+
+# Python cache
+__pycache__
