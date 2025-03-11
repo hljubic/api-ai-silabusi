@@ -149,7 +149,7 @@ def chatKey():
     else:
         return jsonify({"error": "Invalid response from assistant"}), 500
 
-    return jsonify({"response": response, "thread_id": thread_id})
+    return jsonify(response)
 
 ## I want to return downloadable filled_obrzaca.docx file here
 # return send_file(output_path, as_attachment=True)
