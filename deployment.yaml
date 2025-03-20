@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: ai-pomocnik-ednevnik-api
+  name: ai-silabusi-api
   labels:
-    app: ai-pomocnik-ednevnik-api
+    app: ai-silabusi-api
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: ai-pomocnik-ednevnik-api
+      app: ai-silabusi-api
   template:
     metadata:
       labels:
-        app: ai-pomocnik-ednevnik-api
+        app: ai-silabusi-api
     spec:
       containers:
-      - name: ai-pomocnik-ednevnik-api
-        image: hljubic/api-ai.dnevnik.sum.ba:1.0.7 # Zamijenite s vašim Docker Hub username-om
+      - name: ai-silabusi-api
+        image: hljubic/api-silabusi-ai.sum.ba:1.0.6
         ports:
-        - containerPort: 5000
+        - containerPort: 8000
         envFrom:
         - configMapRef:
-            name: ai-pomocnik-ednevnik-api-config  # Ime ConfigMap-a
+            name: ai-silabusi-api-config
 

@@ -110,7 +110,7 @@ def fill_template(data, template_path, output_path):
 
 
 @app.route('/ask-keywords', methods=['POST'])
-def chat():
+def chatKey():
     thread_id = create_thread()
 
     print('here');
@@ -149,7 +149,7 @@ def chat():
     else:
         return jsonify({"error": "Invalid response from assistant"}), 500
 
-    return jsonify({"response": response, "thread_id": thread_id})
+    return jsonify(response)
 
 ## I want to return downloadable filled_obrzaca.docx file here
 # return send_file(output_path, as_attachment=True)
@@ -202,11 +202,22 @@ def chat():
     output_path = os.path.join(app_dir, file_name)
     fill_template(data, template_path, output_path)
 
-    return jsonify({"response": response, "thread_id": thread_id, "document": output_path})
+    return jsonify({"response": response, "thread_id": thread_id, "document": file_name})
 
-   ## I want to return downloadable filled_obrzaca.docx file here
-    # return send_file(output_path, as_attachment=True)
+    ## I want to return downloadable filled_obrzaca.docx file here
+    #return send_file(output_path, as_attachment=True)
 
+
+@app.route('/download/<filename>', methods=['GET'])
+def download_file(filename):
+    file_path = '/app/' + filename
+
+    return send_file(
+        file_path,
+        as_attachment=True,
+        mimetype="application/docx",  # Možeš promijeniti prema tipu fajla
+        download_name=filename  # Postavi ime fajla za preuzimanje
+    )
 
 @app.route('/test', methods=['GET'])
 def test():
