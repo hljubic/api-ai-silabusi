@@ -1,7 +1,7 @@
 flask~=3.1.0
 flask_restful
 flask_cors
-openai~=1.61.0
+openai
 pandas~=2.2.3
 
 Flask-Cors~=5.0.0

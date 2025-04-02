@@ -47,6 +47,15 @@ def check_status(run_id, thread_id):
     return run.status
 
 def get_response(thread_id):
+    response = openai.beta.threads.messages.list(thread_id=thread_id, order="desc")
+
+    for msg in response.data:
+        if msg.role == "assistant":
+            return msg.content[0].text.value
+
+    return None
+
+def get_responseOld(thread_id):
     """Retrieve messages from the thread."""
     response = openai.beta.threads.messages.list(thread_id=thread_id, order="asc")
     return response.data[-1].content[0].text.value if response.data else None
@@ -131,6 +140,7 @@ def chatKey():
                   f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}")
 
 
+    print(user_input)
     submit_message(thread_id, user_input)
     run_id = run_assistant(thread_id)
     status = check_status(run_id, thread_id)
@@ -176,6 +186,7 @@ def chat():
     user_input = (f"Napravi mi silabus sa sljedeći kolegij: Kolegij: {naziv_predmeta}, Studijski program: {studijski_program}, ECTS bodovi: {ects_bodovi}, Ciklus: {ciklus}, Godina studija: {godina_studija}, Kod predmeta: {kod_predmeta}, "
                   f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}")
 
+    print(user_input)
 
     submit_message(thread_id, user_input)
     run_id = run_assistant(thread_id)
@@ -223,4 +234,4 @@ def test():
     return jsonify({"message": "Hello, World!"})
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=8000, debug=True)
+    app.run(host="0.0.0.0", port=8001, debug=True)
