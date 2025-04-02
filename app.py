@@ -182,9 +182,10 @@ def chat():
     praksa = request.json.get('praksa')
     vizija = request.json.get('vizija')
     ishodi_ucenja = request.json.get('ishodi_ucenja')
+    kljucne_rijeci = request.json.get('kljucne_rijeci')
 
     user_input = (f"Napravi mi silabus sa sljedeći kolegij: Kolegij: {naziv_predmeta}, Studijski program: {studijski_program}, ECTS bodovi: {ects_bodovi}, Ciklus: {ciklus}, Godina studija: {godina_studija}, Kod predmeta: {kod_predmeta}, "
-                  f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}")
+                  f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}, Ključne riječi: {kljucne_rijeci}")
 
     print(user_input)
 
