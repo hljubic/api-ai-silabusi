@@ -129,7 +129,7 @@ def chatKey():
     ]
 
     for key in keys:
-        globals()[key] = request.json.get(key)
+        globals()[key] = request.json.get(key, '')
 
     user_input = (f"Napravi mi ključne riječi za sljedeći kolegij: Kolegij: {naziv_predmeta}, Studijski program: {studijski_program}, ECTS bodovi: {ects_bodovi}, Ciklus: {ciklus}, Godina studija: {godina_studija}, Kod predmeta: {kod_predmeta}, "
                   f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija kolegija (kako je nastavnik zamislio svoje specifičnosti): {vizija}, Početak ishoda učenja studijske grupe: {ishodi_ucenja}. Kraj ishoda učenja studijske grupe.")
@@ -171,7 +171,7 @@ def chat():
     ]
 
     for key in keys:
-        globals()[key] = request.json.get(key)
+        globals()[key] = request.json.get(key, '')
 
     try:
         sati_nastava = int(predavanja) + int(vjezbe) + int(seminari) + int(praksa)
