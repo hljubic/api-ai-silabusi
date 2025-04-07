@@ -122,22 +122,17 @@ def fill_template(data, template_path, output_path):
 def chatKey():
     thread_id = create_thread()
 
-    print('here');
-    naziv_predmeta = request.json.get('naziv_predmeta')
-    studijski_program = request.json.get('studijski_program')
-    ects_bodovi = request.json.get('ects_bodovi')
-    ciklus = request.json.get('ciklus')
-    godina_studija = request.json.get('godina_studija')
-    kod_predmeta = request.json.get('kod_predmeta')
-    predavanja = request.json.get('predavanja')
-    vjezbe = request.json.get('vjezbe')
-    seminari = request.json.get('seminari')
-    praksa = request.json.get('praksa')
-    vizija = request.json.get('vizija')
-    ishodi_ucenja = request.json.get('ishodi_ucenja')
+    keys = [
+        "naziv_predmeta", "studijski_program", "ects_bodovi", "ciklus",
+        "godina_studija", "kod_predmeta", "predavanja", "vjezbe",
+        "seminari", "praksa", "vizija", "ishodi_ucenja"
+    ]
+
+    for key in keys:
+        globals()[key] = request.json.get(key, '')
 
     user_input = (f"Napravi mi ključne riječi za sljedeći kolegij: Kolegij: {naziv_predmeta}, Studijski program: {studijski_program}, ECTS bodovi: {ects_bodovi}, Ciklus: {ciklus}, Godina studija: {godina_studija}, Kod predmeta: {kod_predmeta}, "
-                  f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}")
+                  f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija kolegija (kako je nastavnik zamislio svoje specifičnosti): {vizija}, Početak ishoda učenja studijske grupe: {ishodi_ucenja}. Kraj ishoda učenja studijske grupe.")
 
 
     print(user_input)
@@ -169,23 +164,32 @@ def chatKey():
 def chat():
     thread_id = create_thread()
 
-    print('here');
-    naziv_predmeta = request.json.get('naziv_predmeta')
-    studijski_program = request.json.get('studijski_program')
-    ects_bodovi = request.json.get('ects_bodovi')
-    ciklus = request.json.get('ciklus')
-    godina_studija = request.json.get('godina_studija')
-    kod_predmeta = request.json.get('kod_predmeta')
-    predavanja = request.json.get('predavanja')
-    vjezbe = request.json.get('vjezbe')
-    seminari = request.json.get('seminari')
-    praksa = request.json.get('praksa')
-    vizija = request.json.get('vizija')
-    ishodi_ucenja = request.json.get('ishodi_ucenja')
-    kljucne_rijeci = request.json.get('kljucne_rijeci')
+    keys = [
+        "naziv_predmeta", "studijski_program", "ects_bodovi", "ciklus",
+        "godina_studija", "kod_predmeta", "predavanja", "vjezbe",
+        "seminari", "praksa", "vizija", "ishodi_ucenja", "pickedKeywords", "notPickedKeywords"
+    ]
 
-    user_input = (f"Napravi mi silabus sa sljedeći kolegij: Kolegij: {naziv_predmeta}, Studijski program: {studijski_program}, ECTS bodovi: {ects_bodovi}, Ciklus: {ciklus}, Godina studija: {godina_studija}, Kod predmeta: {kod_predmeta}, "
-                  f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}, Ključne riječi: {kljucne_rijeci}")
+    for key in keys:
+        globals()[key] = request.json.get(key, '')
+
+    try:
+        sati_nastava = int(predavanja) + int(vjezbe) + int(seminari) + int(praksa)
+        sati_kolokvij = sati_nastava
+        sati_ispit = sati_nastava // 2
+
+        ukupan_broj_sati = sati_nastava + sati_kolokvij + sati_ispit
+
+        ects_nastava = int(ects_bodovi) // 3
+        ects_kolokvij = int(ects_bodovi) // 2
+        ects_ispit = int(ects_bodovi) - ects_nastava - ects_kolokvij
+
+        user_input = (f"Napravi mi silabus sa sljedeći kolegij: Kolegij: {naziv_predmeta}, Studijski program: {studijski_program}, ECTS bodovi: {ects_bodovi}, Ciklus: {ciklus}, Godina studija: {godina_studija}, Kod predmeta: {kod_predmeta}, "
+                    f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Ukupan broj sati: {ukupan_broj_sati}, Sati nastave: {sati_nastava}, Sati kolokvij: {sati_kolokvij}, Sati ispit: {sati_ispit}, ECTS nastava: {ects_nastava}, ECTS kolokvij: {ects_kolokvij}, ECTS ispit: {ects_ispit}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}, Ključne riječi: {kljucne_rijeci}")
+    except:
+        print("Šaljem bez alokacije sati i ects bodova.")
+        user_input = (f"Napravi mi silabus sa sljedeći kolegij: Kolegij: {naziv_predmeta}, Studijski program: {studijski_program}, ECTS bodovi: {ects_bodovi}, Ciklus: {ciklus}, Godina studija: {godina_studija}, Kod predmeta: {kod_predmeta}, "
+                    f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}, Ključne riječi: {kljucne_rijeci}")
 
     print(user_input)
 
@@ -208,15 +212,17 @@ def chat():
         return jsonify({"error": "Invalid response from assistant"}), 500
 
     template_path = os.path.join(app_dir, 'obrazac.docx')
-    ## generate random string
-    file_name = f'obrazac_{uuid.uuid4()}.docx'
+
+    file_name = f'obrazac_{uuid.uuid4()}.docx' ## generate random string
     output_path = os.path.join(app_dir, file_name)
+
+    for key in keys:
+        if key in locals():
+            data[key] = locals()[key]
+
     fill_template(data, template_path, output_path)
 
     return jsonify({"response": response, "thread_id": thread_id, "document": file_name})
-
-    ## I want to return downloadable filled_obrzaca.docx file here
-    #return send_file(output_path, as_attachment=True)
 
 
 @app.route('/download/<filename>', methods=['GET'])
@@ -226,8 +232,8 @@ def download_file(filename):
     return send_file(
         file_path,
         as_attachment=True,
-        mimetype="application/docx",  # Možeš promijeniti prema tipu fajla
-        download_name=filename  # Postavi ime fajla za preuzimanje
+        mimetype="application/docx",
+        download_name=filename
     )
 
 @app.route('/test', methods=['GET'])
