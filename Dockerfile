@@ -1,6 +1,9 @@
 # Korak 1: Koristite Python kao osnovnu sliku za izgradnju
 FROM python:3.9-slim
 
+# Instaliraj nano i sve potrebne dependencyje
+RUN apt-get update && apt-get install -y nano && apt-get clean
+
 # Postavite radni direktorij
 WORKDIR /app
 
