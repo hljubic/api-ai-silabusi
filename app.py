@@ -167,7 +167,7 @@ def chat():
     keys = [
         "naziv_predmeta", "studijski_program", "ects_bodovi", "ciklus",
         "godina_studija", "kod_predmeta", "predavanja", "vjezbe",
-        "seminari", "praksa", "vizija", "ishodi_ucenja", "pickedKeywords", "notPickedKeywords"
+        "seminari", "praksa", "vizija", "ishodi_ucenja", "pickedKeywords", "notPickedKeywords",
     ]
 
     for key in keys:
@@ -185,11 +185,11 @@ def chat():
         ects_ispit = int(ects_bodovi) - ects_nastava - ects_kolokvij
 
         user_input = (f"Napravi mi silabus sa sljedeći kolegij: Kolegij: {naziv_predmeta}, Studijski program: {studijski_program}, ECTS bodovi: {ects_bodovi}, Ciklus: {ciklus}, Godina studija: {godina_studija}, Kod predmeta: {kod_predmeta}, "
-                    f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Ukupan broj sati: {ukupan_broj_sati}, Sati nastave: {sati_nastava}, Sati kolokvij: {sati_kolokvij}, Sati ispit: {sati_ispit}, ECTS nastava: {ects_nastava}, ECTS kolokvij: {ects_kolokvij}, ECTS ispit: {ects_ispit}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}, Ključne riječi: {kljucne_rijeci}")
+                      f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Ukupan broj sati: {ukupan_broj_sati}, Sati nastave: {sati_nastava}, Sati kolokvij: {sati_kolokvij}, Sati ispit: {sati_ispit}, ECTS nastava: {ects_nastava}, ECTS kolokvij: {ects_kolokvij}, ECTS ispit: {ects_ispit}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}, Odabrane ključne riječi: {pickedKeywords}, Izostavljene ključne riječi: {notPickedKeywords}")
     except:
         print("Šaljem bez alokacije sati i ects bodova.")
         user_input = (f"Napravi mi silabus sa sljedeći kolegij: Kolegij: {naziv_predmeta}, Studijski program: {studijski_program}, ECTS bodovi: {ects_bodovi}, Ciklus: {ciklus}, Godina studija: {godina_studija}, Kod predmeta: {kod_predmeta}, "
-                    f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}, Ključne riječi: {kljucne_rijeci}")
+                      f"Predavanja: {predavanja}, Vjezbe: {vjezbe}, Seminari: {seminari}, Praksa: {praksa}, Vizija: {vizija}, Ishodi učenja: {ishodi_ucenja}, Odabrane ključne riječi: {pickedKeywords}, Izostavljene ključne riječi: {notPickedKeywords}")
 
     print(user_input)
 
