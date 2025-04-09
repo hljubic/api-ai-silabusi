@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
       - name: ai-silabusi-api
-        image: hljubic/api-silabusi-ai.sum.ba:1.0.10
+        image: hljubic/api-silabusi-ai.sum.ba:1.1.1
         ports:
         - containerPort: 8000
         envFrom:

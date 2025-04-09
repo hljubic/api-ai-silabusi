@@ -14,9 +14,9 @@ COPY . .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Expose port 5000 (Flask default)
-EXPOSE 5000
+EXPOSE 8000
 
 # Pokrenite Flask aplikaciju
 #CMD ["flask", "run", "--host=0.0.0.0"]
 #CMD ["python", "app.py"]
-CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:5000", "--timeout", "180", "app:app"]
+CMD ["gunicorn", "-w", "4", "-b", "0.0.0.0:8000", "--timeout", "180", "app:app"]

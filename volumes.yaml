@@ -6,7 +6,7 @@ metadata:
     app: ai-silabusi-api
 spec:
   capacity:
-    storage: 1Gi
+    storage: 4Gi
   accessModes:
     - ReadWriteOnce
   hostPath:
@@ -27,5 +27,5 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 1Gi
+      storage: 4Gi
   storageClassName: manual

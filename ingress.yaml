@@ -6,6 +6,9 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /
     cert-manager.io/cluster-issuer: letsencrypt-prod
     kubernetes.io/ingress.class: public
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "360"
+    nginx.ingress.kubernetes.io/proxy-connect-timeout: "360"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "360"
 spec:
   rules:
   - host: api-silabusi-ai.sum.ba  # Zamijenite s vašom domenom ili koristite lokalno testiranje
@@ -18,6 +21,7 @@ spec:
             name: ai-silabusi-api-service
             port:
               number: 80
+
   tls:
     - hosts:
         - api-silabusi-ai.sum.ba
